@@ -37,5 +37,13 @@ typedef struct configurationNode_t {
   char state;
 } ConfigurationNode_t;
 
+// Extended Backwards Reasoning Decider
+typedef struct {
+  ConfigurationNode_t *halting_signature;
+  ConfigurationNode_t *current_node;
+  ConfigurationNode_t **unexplored_leaves;
+
+  Instruction_t rules[STATES][SYMBOLS];
+} EBRDecider;
 
 #endif

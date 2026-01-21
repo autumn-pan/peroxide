@@ -11,3 +11,4 @@ Given some turing machine with one and only one halt state, Peroxide will first 
 There are probably a lot more cases than this, but this these three confitions is sufficient to solve at least a few holdouts. If it is shown that every node of a configuration tree is unreachable, then the machine is nonhalting.
 
 These are the four ways I thought of pruning the configuration tree. I will get on to formalizing this and coding it shortly. I think that these can be established as a set of lemmas.
+
