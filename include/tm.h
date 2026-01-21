@@ -30,18 +30,18 @@ typedef struct {
 } NaiveTM_t;
 
 // Reduced Configuration Tree (RCT)
-typedef struct configurationNode_t {
+typedef struct halting_signature {
   uint64_t *tape;
-  configurationNode_t **children;
+  halting_signature **children;
   size_t head_index;
   char state;
-} ConfigurationNode_t;
+} HaltingSignature;
 
 // Extended Backwards Reasoning Decider
 typedef struct {
-  ConfigurationNode_t *halting_signature;
-  ConfigurationNode_t *current_node;
-  ConfigurationNode_t **unexplored_leaves;
+  HaltingSignature *halting_signature;
+  HaltingSignature *current_node;
+  HaltingSignature **unexplored_leaves;
 
   Instruction_t rules[STATES][SYMBOLS];
 } EBRDecider;
