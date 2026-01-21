@@ -1,6 +1,7 @@
 #ifndef TM_H
 #define TM_H
 
+#include <stddef.h>
 #include <stdint.h>
 
 #ifndef TM_PARAMS 
@@ -21,7 +22,9 @@ typedef struct {
 } Instruction_t;
 
 typedef struct {
-
-} TuringMachine_t;
+  uint64_t *tape;
+  Instruction_t rules[STATES][SYMBOLS];
+  size_t
+} NaiveTM_t;
 
 #endif
