@@ -24,7 +24,18 @@ typedef struct {
 typedef struct {
   uint64_t *tape;
   Instruction_t rules[STATES][SYMBOLS];
-  size_t
+  size_t step_index;
+  size_t head_index;
+  char state;
 } NaiveTM_t;
+
+// Reduced Configuration Tree (RCT)
+typedef struct configurationNode_t {
+  uint64_t *tape;
+  configurationNode_t **children;
+  size_t head_index;
+  char state;
+} ConfigurationNode_t;
+
 
 #endif
