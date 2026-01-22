@@ -5,6 +5,7 @@
 #include <stddef.h>
 
 #include "tm.h"
+#include "error.h"
 
 #ifndef DECIDER_PARAMS
   #define CT_DEPTH 32
@@ -14,7 +15,8 @@
 // Reduced Configuration Tree (RCT)
 typedef struct halting_signature {
   struct halting_signature **children;
-  uint64_t *tape;
+  size_t num_children;
+  uint64_t tape[TAPE_SIZE];
   size_t head_index;
   char state;
 } HaltingSignature;
@@ -29,5 +31,7 @@ typedef struct {
   size_t num_unsolved;
 } EBRDecider;
 
+RET_STATUS free_signature_children();
+RET_STATUS free_configuration_subtree();
 
 #endif
