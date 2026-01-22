@@ -34,5 +34,7 @@ typedef struct {
 } NaiveTM_t;
 
 NaiveTM_t *init_tm(char *src);
-
+void write(uint64_t *tape, size_t index, bool value);
+uint8_t read(uint64_t *tape, size_t index);
+void shift(NaiveTM_t *tm, DIRECTION dir);
 #endif

@@ -2,11 +2,12 @@
 #include <string.h>
 #include <ctype.h>
 #include <stdio.h>
+#include <stdlib.h>
 
-#include "parser.h"
 #include "tm.h"
+#include "error.h"
 
-// Code from APBeaver repository, by Autumn Pan 2025
+// Code from APBeaver repository, copyright Autumn Pan 2025
 static bool validate_and_advance(char **str, char *out, size_t min_length) {
   if (strlen(*str) < min_length) 
     return false;
@@ -35,7 +36,7 @@ Instruction_t parse_instruction(char *src) {
     return instruction;
   }
 
-    // Parse which direction the head moves
+   // Parse which direction the head moves
   char move_char;
   if (!validate_and_advance(&src, &move_char, 1)) {
     instruction.error = true;

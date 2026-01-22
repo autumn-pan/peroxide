@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
 #include "decider.h"
 #include "error.h"
@@ -69,4 +70,3 @@ EBRDecider *init_decider(Instruction_t rules[STATES][SYMBOLS]) {
 
   return decider;
 }
-
