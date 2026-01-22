@@ -4,6 +4,10 @@
 #include "decider.h"
 #include "error.h"
 
+///////////////////////////////////////////////////////////
+// Halting Signature Utils
+///////////////////////////////////////////////////////////
+
 RET_STATUS free_signature_children(HaltingSignature *root);
 
 RET_STATUS free_signature_subtree(HaltingSignature *root) {

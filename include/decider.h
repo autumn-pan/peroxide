@@ -3,6 +3,7 @@
 
 #include <stdint.h>
 #include <stddef.h>
+#include <stdbool.h>
 
 #include "tm.h"
 #include "error.h"
@@ -19,6 +20,7 @@ typedef struct halting_signature {
   uint64_t tape[TAPE_SIZE];
   size_t head_index;
   char state;
+  bool terminated;
 } HaltingSignature;
 
 // Extended Backwards Reasoning Decider
