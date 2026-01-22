@@ -31,7 +31,6 @@ typedef struct {
   size_t num_unsolved;
 } EBRDecider;
 
-RET_STATUS free_signature_children();
-RET_STATUS free_configuration_subtree();
+RET_STATUS free_configuration_subtree(HaltingSignature *root);
 
 #endif
