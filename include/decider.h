@@ -25,7 +25,7 @@ typedef struct halting_signature {
 
 // Extended Backwards Reasoning Decider
 typedef struct {
-  HaltingSignature *halting_signature;
+  HaltingSignature *root;
   HaltingSignature *current_node;
   HaltingSignature **unexplored_leaves;
 
@@ -34,5 +34,7 @@ typedef struct {
 } EBRDecider;
 
 RET_STATUS free_configuration_subtree(HaltingSignature *root);
+EBRDecider *init_decider(Instruction_t rules[STATES][SYMBOLS]);
+HaltingSignature *init_halting_signature(char state, size_t head_index, uint64_t *tape);
 
 #endif

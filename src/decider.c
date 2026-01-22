@@ -8,8 +8,10 @@
 // Halting Signature Utils
 ///////////////////////////////////////////////////////////
 
+// Run free_signature_subtree over all children of a halting signature
 RET_STATUS free_signature_children(HaltingSignature *root);
 
+// Takes root and frees all descendents of it as well as itself
 RET_STATUS free_signature_subtree(HaltingSignature *root) {
   if(!root) {
     return RET_ERR_PARAMS;
@@ -31,5 +33,40 @@ RET_STATUS free_signature_children(HaltingSignature *root) {
   }
 
   return RET_SUCC;
+}
+
+HaltingSignature *init_halting_signature(char state, size_t head_index, uint64_t *tape) {
+  if(!tape) {
+    return NULL;
+  }
+
+  HaltingSignature *sig = malloc(sizeof(HaltingSignature));
+  if(!sig) {
+    return NULL;
+  }
+
+  memcpy(sig->tape, tape, sizeof(tape));
+  sig->state = state;
+  sig->head_index = head_index;
+  sig->children = NULL;
+  sig->num_children = 0;
+  sig->terminated = false;
+
+  return sig;
+}
+
+EBRDecider *init_decider(Instruction_t rules[STATES][SYMBOLS]) {
+  EBRDecider *decider = malloc(sizeof(EBRDecider));
+  if(!decider) {
+    return NULL;
+  }
+
+  decider->current_node = NULL;
+  decider->root = NULL;
+  decider->num_unsolved = 0;
+  decider->unexplored_leaves = NULL;
+  memcpy(decider->rules, rules, sizeof(rules));
+
+  return decider;
 }
 
