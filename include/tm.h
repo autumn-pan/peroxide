@@ -7,6 +7,7 @@
 #ifndef TM_PARAMS 
   #define STATES 6
   #define SYMBOLS 2
+  #define TAPE_SIZE 4
 #endif
 
 
@@ -23,7 +24,7 @@ typedef struct {
 
 typedef struct {
   uint64_t *tape;
-  Instruction_t rules[STATES][SYMBOLS];
+  Instruction_t **rules;
   size_t step_index;
   size_t head_index;
   char state;
@@ -31,8 +32,8 @@ typedef struct {
 
 // Reduced Configuration Tree (RCT)
 typedef struct halting_signature {
+  struct halting_signature **children;
   uint64_t *tape;
-  halting_signature **children;
   size_t head_index;
   char state;
 } HaltingSignature;
@@ -44,6 +45,9 @@ typedef struct {
   HaltingSignature **unexplored_leaves;
 
   Instruction_t rules[STATES][SYMBOLS];
+  size_t num_unsolved;
 } EBRDecider;
+
+NaiveTM_t *init_naive_tm(Instruction_t **rules);
 
 #endif
