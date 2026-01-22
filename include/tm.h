@@ -3,6 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
+#include <stdbool.h>
 
 #ifndef TM_PARAMS 
   #define STATES 6
@@ -20,6 +21,8 @@ typedef struct {
   uint8_t write;
   DIRECTION dir;
   char state;
+  bool error;
+  bool halting;
 } Instruction_t;
 
 typedef struct {
@@ -30,6 +33,6 @@ typedef struct {
   char state;
 } NaiveTM_t;
 
-NaiveTM_t *init_naive_tm(Instruction_t **rules);
+NaiveTM_t *init_tm(char *src);
 
 #endif
