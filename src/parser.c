@@ -7,7 +7,6 @@
 #include "tm.h"
 #include "error.h"
 
-// Code from APBeaver repository, copyright Autumn Pan 2025
 static bool validate_and_advance(char **str, char *out, size_t min_length) {
   if (strlen(*str) < min_length) 
     return false;

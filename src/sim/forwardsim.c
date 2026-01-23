@@ -1,4 +1,4 @@
-#include "forwardsim.h"
+#include "sim/forwardsim.h"
 #include "tm.h"
 
 #include <string.h>
@@ -11,6 +11,5 @@ void step(NaiveTM_t *tm) {
     write(tm->tape, tm->head_index, tm->rules[tm->state][symbol].write);
     shift(tm, tm->rules[tm->state][symbol].dir);
     tm->state = tm->rules[tm->state][symbol].state;
-
   }
 }
