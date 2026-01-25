@@ -101,6 +101,7 @@ NaiveTM_t* init_tm(char *src)
     if (i < STATES - 1)
       mirror++;
   }
+  
   tm->tape = calloc(TAPE_SIZE, sizeof(uint64_t));
   if(!tm->tape) {
     fprintf(stderr, "Error: Memory allocation failed!");

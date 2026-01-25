@@ -19,7 +19,6 @@ RET_STATUS free_signature_subtree(HaltingSignature *root) {
   }
 
   free_signature_children(root);
-  free(root->tape);
   free(root);
   return RET_SUCC;
 }
@@ -66,6 +65,7 @@ EBRDecider *init_decider(Instruction_t rules[STATES][SYMBOLS]) {
   decider->root = NULL;
   decider->num_unsolved = 0;
   decider->unexplored_leaves = NULL;
+
   memcpy(decider->rules, rules, sizeof(rules));
 
   return decider;

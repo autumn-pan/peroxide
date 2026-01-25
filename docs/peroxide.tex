@@ -12,5 +12,5 @@
 	Many holdouts in S(6) may be solved by Backwards Reasoning (BR), that is, starting from the halting state and proving it unreachable has historically led to many holdouts being proven nonhalting. Despite these successes, deciders have relied primarily on contradiction, and have therefore been unable to decide certain families of machines.
 
 	This document proposes a new method of showing unreachability: Head-Position Reachability (HPR) Analysis. Given a turing machine $M$, we call any segment of its tape including the head a halting signature of degree $n$ $H^n$ if it halts in exactly $n$ steps and if its head does not exit the tape segment. If the head is on either extreme of the tape segment, then we consider two possible conditions to determine its reachability: traversability and constructability. If the head can traverse from the other side of the tape segment to the other without reaching a contradiction, then it is deemed traversable. To determine constructability, we must determine whether or not the head can be on the correct side of the tape segment without traversing across it. If it is both inconstructable and intraversable, then $H^n$ is unreachable.
-
 \end{document}
+
