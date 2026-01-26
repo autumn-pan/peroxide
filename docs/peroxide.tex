@@ -4,13 +4,15 @@
 \usepackage{amssymb}
 \usepackage[top=3cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 
+\renewcommand{\qedsymbol}{gg ez}
+\newtheorem{definition}{Definition}
 \title{Head-Position Reachability Analysis: an Accelerated Model of Deciding Turing Machines}
 \author{Autumn Pan}
 \date{January 2026}
 \begin{document}
 	\maketitle
 	Many holdouts in S(6) may be solved by Backwards Reasoning (BR), that is, starting from the halting state and proving it unreachable has historically led to many holdouts being proven nonhalting. Despite these successes, deciders have relied primarily on contradiction, and have therefore been unable to decide certain families of machines.
-
+	
 	We define a Halting signature $H^n$ of some machine $M$ as the tuple
 	\begin{align*}
 		(I, h, q, \tau, n)
@@ -24,7 +26,14 @@
 		\item $\tau:I\rightarrow\{0,1\}$ s.t for some cell $i\in I$, $\tau(i)$ defines the symbol that occupies $i$
 	\end{itemize}
 	We assume that $M$ provides a set of all states $Q$ with one and only one halt state $z\in q$, a tape alphabet ${0,1}$, and there exists some transition function $\mu$. Some halting signature of degree $n$ $H^n$ must halt in exactly $n$ steps, otherwise it is not a valid halting signature.
-
+	Given this, there must exist one and only one halting signature of degree $0$, which is the halt state. We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$.
 	
-
+	\begin{definition}{Halting Signature Tree} \\
+		For some turing machine $M$ with exactly one halt state, let its halting signature tree (HST) $\Tau(M)$ be a directed tree with root $H^0$, and whose nodes are halting signatures $H^n$, and where there exists an edge
+		\begin{align*}
+			H^{n+1}\rightarrow H^n
+		\end{align*}
+		if and only if $H^{n+1}$ is a child of $H^n$
+	\end{definition}
+	
 \end{document}
