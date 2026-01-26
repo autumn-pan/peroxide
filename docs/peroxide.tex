@@ -13,21 +13,23 @@
 	\maketitle
 	Many holdouts in S(6) may be solved by Backwards Reasoning (BR), that is, starting from the halting state and proving it unreachable has historically led to many holdouts being proven nonhalting. Despite these successes, deciders have relied primarily on contradiction, and have therefore been unable to decide certain families of machines.
 	
-	We define a Halting signature $H^n$ of some machine $M$ as the tuple
-	\begin{align*}
-		(I, h, q, \tau, n)
-	\end{align*}
-	where
-	\begin{itemize}
-		\item $I$ is some finite interval within $\mathbb{Z}$
-		\item $h \in I$ is the position of the Head
-		\item $q$ is the machine's state
-		\item $n$ is the number of steps it will take for $q$ to be the halting state
-		\item $\tau:I\rightarrow\{0,1\}$ s.t for some cell $i\in I$, $\tau(i)$ defines the symbol that occupies $i$
-	\end{itemize}
-	We assume that $M$ provides a set of all states $Q$ with one and only one halt state $z\in q$, a tape alphabet ${0,1}$, and there exists some transition function $\mu$. Some halting signature of degree $n$ $H^n$ must halt in exactly $n$ steps, otherwise it is not a valid halting signature.
-	Given this, there must exist one and only one halting signature of degree $0$, which is the halt state. We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$.
-	
+	\begin{definition}[Halting Signature]
+		We define a Halting signature $H^n$ of some machine $M$ as the tuple
+		\begin{align*}
+			(I, h, q, \tau, n)
+		\end{align*}
+		where
+		\begin{itemize}
+			\item $I$ is some finite interval within $\mathbb{Z}$
+			\item $h \in I$ is the position of the Head
+			\item $q$ is the machine's state
+			\item $n$ is the number of steps it will take for $q$ to be the halting state
+			\item $\tau:I\rightarrow\{0,1\}$ s.t for some cell $i\in I$, $\tau(i)$ defines the symbol that occupies $i$
+		\end{itemize}
+		We assume that $M$ provides a set of all states $Q$ with one and only one halt state $z\in q$, a tape alphabet ${0,1}$, and there exists some transition function $\mu$. Some halting signature of degree $n$ $H^n$ must halt in exactly $n$ steps, otherwise it is not a valid halting signature.
+		Given this, there must exist one and only one halting signature of degree $0$, which is the halt state. We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$.
+	\end{definition}
+
 	\begin{definition}{Halting Signature Tree} \\
 		For some turing machine $M$ with exactly one halt state, let its halting signature tree (HST) $\Tau(M)$ be a directed tree with root $H^0$, and whose nodes are halting signatures $H^n$, and where there exists an edge
 		\begin{align*}
@@ -35,5 +37,17 @@
 		\end{align*}
 		if and only if $H^{n+1}$ is a child of $H^n$
 	\end{definition}
+
+	\begin{definition}{Reachability}
+		For some turing machine $M$, a halting signature $H^n$ is considered reachable if and only if there exists some $H^m$ s.t. $\exists p \in \mathbb{N} where \mu^p(H^m)$, and $H^m$ is the starting configuration of $M$. More relevantly, $H^n$ is considered unreachable if this is not the case.
+	\end{definition}
+
+	\begin{lemma} For all halting configurations $H^n$, $H^n$ is reachable if and only if at least one child of $H^n$ is also reachable.
+
+	\end{lemma}
+	
+	\begin{lemma} For all turing machines $M$, if all corresponding halting signatures $H^n$ are unreachable, then $M$ is nonhalting.
+	
+	\end{lemma}
 	
 \end{document}
