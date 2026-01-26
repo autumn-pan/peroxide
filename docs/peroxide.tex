@@ -11,8 +11,14 @@
 \date{January 2026}
 \begin{document}
 	\maketitle
-	Many holdouts in S(6) may be solved by Backwards Reasoning (BR), that is, starting from the halting state and proving it unreachable has historically led to many holdouts being proven nonhalting. Despite these successes, deciders have relied primarily on contradiction, and have therefore been unable to decide certain families of machines.
-	
+	Many holdouts in S(6) may be solved by Backwards Reasoning (BR), that is, starting from the halting state and proving it unreachable has historically led to many holdouts being proven nonhalting. Despite these successes, deciders have relied primarily on contradiction, and have therefore been unable to decide certain families of Turing machines.
+
+	Traditional Backwards Reasoning relies on constructing a tree of the possible configurations of a turing machine that will lead it to halt, essentially simulating the machine backwards. For some configurations $C_0$, there will exist no other configuration $C_1$ such that applying the machines transition function $\mu$ from $C_1$ will yield $C_0$ in exactly one step. Under traditional BR, this configuration would be deemed unreachable. If all leaves of this configuration tree are unreachable, then the machine is nonhalting. While this has seen success in deciding a number of Turing machines, the configuration tree often grows exponentially fast, making BR not only incredibly computationally expensive, but impractical for the majority of Turing machines. 
+
+	In this paper, we propose a new method of proving that certain configurations are unreachable: Head-Position Reachability (HPR). In HPR, we analyze the head's position relative to the tape segment, and determine whether or not it is possible for the head to be on that side of the tape segment. This enables us to determine the reachability of certain configurations that may otherwise fragment exponentially. We formalize reachability and Halting Configuration Trees, and introduce the notions of constructability, traversability, and critical direction, allowing Backwards Reasoning to systemically decide previously undecidable holdouts.
+
+	While it is not possible to make Backwards Analysis capable of deciding all Turing machines, HPR may allow for automated deciders that can decide new families of Turing machines, advancing our understanding of the halting behavior of small Turing machines.
+
 	\begin{definition}[Halting Signature]
 		We define a Halting signature $H^n$ of some machine $M$ as the tuple
 		\begin{align*}
@@ -49,4 +55,16 @@
 	\begin{lemma} For all halting configurations $H^n$, $H^n$ is reachable if and only if at least one child of $H^n$ is also reachable.
 		
 	\end{lemma}
+
+	For all halting signatures $H^n$ with indexed over $(a,b)\subset \mathbb{Z}$, we can split the head's position into three intervals:
+	\begin{itemize}
+		\item $(-\infty, a]$
+		\item $(a, b)$
+		\item $[b, \infty)$
+	\end{itemize} 
+	For all $H^n$ with $h\in(-\infty, a]\bigcup[b, \infty)$, we say that $H^n$ is an \emph{extremal halting signature}.
+
+	\begin{definition}{Critical Direction}
+		given an extre
+	\end{definition}
 \end{document}
