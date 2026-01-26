@@ -11,14 +11,22 @@
 \date{January 2026}
 \begin{document}
 	\maketitle
+	\tableofcontents
+	\newpage
+	\section{Introduction}
+
+	\subsection{Background}
 	Many holdouts in S(6) may be solved by Backwards Reasoning (BR), that is, starting from the halting state and proving it unreachable has historically led to many holdouts being proven nonhalting. Despite these successes, deciders have relied primarily on contradiction, and have therefore been unable to decide certain families of Turing machines.
 
 	Traditional Backwards Reasoning relies on constructing a tree of the possible configurations of a turing machine that will lead it to halt, essentially simulating the machine backwards. For some configurations $C_0$, there will exist no other configuration $C_1$ such that applying the machines transition function $\mu$ from $C_1$ will yield $C_0$ in exactly one step. Under traditional BR, this configuration would be deemed unreachable. If all leaves of this configuration tree are unreachable, then the machine is nonhalting. While this has seen success in deciding a number of Turing machines, the configuration tree often grows exponentially fast, making BR not only incredibly computationally expensive, but impractical for the majority of Turing machines. 
 
+	\subsection{Head-Position Reachability}
 	In this paper, we propose a new method of proving that certain configurations are unreachable: Head-Position Reachability (HPR). In HPR, we analyze the head's position relative to the tape segment, and determine whether or not it is possible for the head to be on that side of the tape segment. This enables us to determine the reachability of certain configurations that may otherwise fragment exponentially. We formalize reachability and Halting Configuration Trees, and introduce the notions of constructability, traversability, and critical direction, allowing Backwards Reasoning to systemically decide previously undecidable holdouts.
+	\subsection{Applications}
+	While it is not possible to make Backwards Analysis capable of deciding all Turing machines, HPR may allow for automated deciders that can decide new families of Turing machines, advancing our understanding of the halting behavior of small Turing machines. Moreover, since HPR is fundamentally a technique for determining the reachability of a halting configuration, this framework may be used in parallel with other emergent techniques in Backwards Reasoning to decide a broader range of turing machines. In particular, we also propose methods of showing unreachability in configuration trees by induction as opposed to just contradiction.
 
-	While it is not possible to make Backwards Analysis capable of deciding all Turing machines, HPR may allow for automated deciders that can decide new families of Turing machines, advancing our understanding of the halting behavior of small Turing machines.
-
+	\section{Halting Signatures and Reachability}
+	The most fundamental idea in Backwards Reasoning is the halting signature. To describe how a Turing machine works in reverse, we must first define a way to focus on only the relevant portion of that turing machine.
 	\begin{definition}[Halting Signature]
 		We define a Halting signature $H^n$ of some machine $M$ as the tuple
 		\begin{align*}
@@ -26,16 +34,18 @@
 		\end{align*}
 		where
 		\begin{itemize}
-			\item $I$ is some finite interval within $\mathbb{Z}$
+			\item $I$ is some finite interval $[a,b]$ within $\mathbb{Z}$
 			\item $h \in I$ is the position of the Head
 			\item $q$ is the machine's state
 			\item $n$ is the number of steps it will take for $q$ to be the halting state
 			\item $\tau:I\rightarrow\{0,1\}$ s.t for some cell $i\in I$, $\tau(i)$ defines the symbol that occupies $i$
 		\end{itemize}
-		We assume that $M$ provides a set of all states $Q$ with one and only one halt state $z\in q$, a tape alphabet ${0,1}$, and there exists some transition function $\mu$. Some halting signature of degree $n$ $H^n$ must halt in exactly $n$ steps, otherwise it is not a valid halting signature.
+		We assume that $M$ provides a set of all states $Q$ with one and only one halt state $z\in q$, a tape alphabet ${0,1}$, and there exists some transition function $\mu$. Some halting signature of degree $n$ $H^n$ must halt in exactly $n$ steps, otherwise it is not a valid halting signature. We choose $a$ and $b$ such that the smallest and largest value $h$ will equal before halting are $a$ and $b$ respectively.
 		Given this, there must exist one and only one halting signature of degree $0$, which is the halt state. We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$.
 	\end{definition}
+	Because the head will visit but not exceed both extremes of $I$, only cells in $I$ are relevant to whether or not that configuration will halt. If any halting configuration is reached within the runtime of a Turing machine, then it is halting. We will use this notion to define Halting Signature trees to fully capture the backwards behavior of a Turing Machine.
 
+	
 	\begin{definition}{Halting Signature Tree}
 		For some turing machine $M$ with exactly one halt state, let its halting signature tree (HST) $\Tau(M)$ be a directed tree with root $H^0$, and whose nodes are halting signatures $H^n$, and where there exists an edge
 		\begin{align*}
@@ -52,10 +62,14 @@
 		and $H^m$ is the starting configuration of $M$.
 	\end{definition}
 
+	\subsection{Reachability of Halting Signature Trees}
+
 	\begin{lemma} For all halting configurations $H^n$, $H^n$ is reachable if and only if at least one child of $H^n$ is also reachable.
 		
 	\end{lemma}
 
+	\section{Head-Position Reachability}
+	\subsection{Extremal Halting Signatures}
 	For all halting signatures $H^n$ with indexed over $(a,b)\subset \mathbb{Z}$, we can split the head's position into three intervals:
 	\begin{itemize}
 		\item $(-\infty, a]$
