@@ -4,8 +4,8 @@
 \usepackage{amssymb}
 \usepackage[top=3cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 
-\renewcommand{\qedsymbol}{gg ez}
 \newtheorem{definition}{Definition}
+\newtheorem{lemma}{Lemma}
 \title{Head-Position Reachability Analysis: an Accelerated Model of Deciding Turing Machines}
 \author{Autumn Pan}
 \date{January 2026}
@@ -30,7 +30,7 @@
 		Given this, there must exist one and only one halting signature of degree $0$, which is the halt state. We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$.
 	\end{definition}
 
-	\begin{definition}{Halting Signature Tree} \\
+	\begin{definition}{Halting Signature Tree}
 		For some turing machine $M$ with exactly one halt state, let its halting signature tree (HST) $\Tau(M)$ be a directed tree with root $H^0$, and whose nodes are halting signatures $H^n$, and where there exists an edge
 		\begin{align*}
 			H^{n+1}\rightarrow H^n
@@ -39,14 +39,17 @@
 	\end{definition}
 
 	\begin{definition}{Reachability}
-		For some turing machine $M$, a halting signature $H^n$ is considered reachable if and only if there exists some $H^m$ s.t. $\exists p \in \mathbb{N} where \mu^p(H^m)$, and $H^m$ is the starting configuration of $M$. More relevantly, $H^n$ is considered unreachable if this is not the case.
+		For some turing machine $M$, a halting signature $H^n$ is considered reachable if and only if there exists some $H^m$ and some $p \in \mathbb{N}$ where 
+		\begin{align*}
+		\mu^p(H^m)
+		\end{align*}
+		and $H^m$ is the starting configuration of $M$.
 	\end{definition}
 
 	\begin{lemma} For all halting configurations $H^n$, $H^n$ is reachable if and only if at least one child of $H^n$ is also reachable.
-
+		
 	\end{lemma}
-	
-	\begin{lemma} For all turing machines $M$, if all corresponding halting signatures $H^n$ are unreachable, then $M$ is nonhalting.
+	\begin{lemma} if halting signatures $H^n$ of a Turing machine $M$ are unreachable, then $M$ is nonhalting.
 	
 	\end{lemma}
 	
