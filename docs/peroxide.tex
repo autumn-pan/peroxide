@@ -41,11 +41,26 @@
 			\item $\tau:I\rightarrow\{0,1\}$ s.t for some cell $i\in I$, $\tau(i)$ defines the symbol that occupies $i$
 		\end{itemize}
 		We assume that $M$ provides a set of all states $Q$ with one and only one halt state $z\in q$, a tape alphabet ${0,1}$, and there exists some transition function $\mu$. Some halting signature of degree $n$ $H^n$ must halt in exactly $n$ steps, otherwise it is not a valid halting signature. We choose $a$ and $b$ such that the smallest and largest value $h$ will equal before halting are $a$ and $b$ respectively.
-		Given this, there must exist one and only one halting signature of degree $0$, which is the halt state. We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$.
 	\end{definition}
 	Because the head will visit but not exceed both extremes of $I$, only cells in $I$ are relevant to whether or not that configuration will halt. If any halting configuration is reached within the runtime of a Turing machine, then it is halting. We will use this notion to define Halting Signature trees to fully capture the backwards behavior of a Turing Machine.
 
-	
+	Our goal with Halting Signatures is to use them to describe every possible configuration that halts under the rules of a Turing machine $M$ and show that all such configurations are unreachable. If we show that it is impossible for $M$ to reach a configuration that would eventually lead it to halt, then it must be nonhalting. But first, we must define what reachability is.
+		\begin{definition}{Reachability}
+		For some turing machine $M$, a halting signature $H^n$ is considered reachable if and only if there exists some $H^m$ and some $p \in \mathbb{N}$ where 
+		\begin{align*}
+		\mu^p(H^m)=H^n
+		\end{align*}
+		and $H^m$ is the starting configuration of $M$.
+	\end{definition}
+	This means that all unreachable halting signatures $H^n$ of a Turing machine $M$ will never appear in the runtime of $M$. The ultimate goal of Backwards Reasoning is to show that the halt state $H^0$ is unreachable, and therefore that $M$ is nonhalting.
+
+	In order to analyze the reachability of halting signatures through a halting signature tree, we must first define the relationship between halting signatures.
+	\begin{definition}[Children]
+		We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields a halting signature that contains $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$. 
+		Likewise, we say that a halting signature $H^m$ is a descendant of $H^n$ if and only if there exists some positive integer $a$ such that $\mu^a(H^m)$ contains $H^n$
+	\end{definition}
+	In a halting Turing machine, the starting configuration must be a descendant of the halt state $H^0$. To prove that a Turing machine $M$ is nonhalting, we assume for the purpose of contradiction that $M$ is halting, and show that the starting configuration cannot be a descendant of $H^0$.
+	To do this, we consider every single configuration that halts under the rules of $M$ in the form of a Halting Signature Tree. A Halting Signature Tree is necessary for determining the unreachability of the halt state because it captures every possible way that $M$ can reach its halt state. If we can show that all paths in this tree are unreachable, then we have shown that the starting configuration is not a descendant of $H^0$, and therefore that $M$ is nonhalting. 
 	\begin{definition}{Halting Signature Tree}
 		For some turing machine $M$ with exactly one halt state, let its halting signature tree (HST) $\Tau(M)$ be a directed tree with root $H^0$, and whose nodes are halting signatures $H^n$, and where there exists an edge
 		\begin{align*}
@@ -53,19 +68,15 @@
 		\end{align*}
 		if and only if $H^{n+1}$ is a child of $H^n$
 	\end{definition}
-
-	\begin{definition}{Reachability}
-		For some turing machine $M$, a halting signature $H^n$ is considered reachable if and only if there exists some $H^m$ and some $p \in \mathbb{N}$ where 
-		\begin{align*}
-		\mu^p(H^m)
-		\end{align*}
-		and $H^m$ is the starting configuration of $M$.
-	\end{definition}
-
 	\subsection{Reachability of Halting Signature Trees}
-
-	\begin{lemma} For all halting configurations $H^n$, $H^n$ is reachable if and only if at least one child of $H^n$ is also reachable.
-		
+	\begin{lemma} For all halting configurations $H^n$ of some Turing machine $M$, $H^n$ is reachable if and only if at least one child of $H^n$ is also reachable.
+		\begin{proof}
+			Assume that $H^n$ is reachable given $M$ has starting configuration $H_0$. By definition, the starting configuration of $M$ is a descendant of $H^n$. That is, there exists some integer $p$ such that
+			\begin{align*}
+				\mu^p(H_0) \text{ contains } H^n
+			\end{align*}
+			This means that there exists some halting signature $\mu^{p-1}(H_0) \text{ that contains } H^{n+1}$. Since applying the transition function $\mu$ to $\mu^{p-1}(H_0)$ contains $H^n$, we know that by definition, $H^{n+1}$ is a child of $H^n$. Therefore, if $H^n$ is reachable, at least one of its children $H^{n+1}$ is also reachable.
+		\end{proof}
 	\end{lemma}
 
 	\section{Head-Position Reachability}
