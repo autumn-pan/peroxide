@@ -5,7 +5,9 @@
 \usepackage[top=3cm, bottom=2.5cm, left=2.5cm, right=2.5cm]{geometry}
 
 \newtheorem{definition}{Definition}
-\newtheorem{lemma}{Lemma}
+\newtheorem{lemma}{Lemma}[theorem]
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{corollary}{Corollary}[theorem]
 \title{Head-Position Reachability Analysis: an Accelerated Model of Deciding Turing Machines}
 \author{Autumn Pan}
 \date{January 2026}
@@ -54,13 +56,13 @@
 	\end{definition}
 	This means that all unreachable halting signatures $H^n$ of a Turing machine $M$ will never appear in the runtime of $M$. The ultimate goal of Backwards Reasoning is to show that the halt state $H^0$ is unreachable, and therefore that $M$ is nonhalting.
 
-	In order to analyze the reachability of halting signatures through a halting signature tree, we must first define the relationship between halting signatures.
+	In order to analyze the reachability of halting signatures through a halting signature tree, we must first define the relationship between halting signatures. 
 	\begin{definition}[Children]
 		We say a halting signature $H^{n+1}$ is a child of $H^n$ if and only if applying the transition function $\mu$ to $H^{n+1}$ yields a halting signature that contains $H^n$, and we call the collection of all such $H^{n+1}$ the children of $H^n$. 
 		Likewise, we say that a halting signature $H^m$ is a descendant of $H^n$ if and only if there exists some positive integer $a$ such that $\mu^a(H^m)$ contains $H^n$
 	\end{definition}
 	In a halting Turing machine, the starting configuration must be a descendant of the halt state $H^0$. To prove that a Turing machine $M$ is nonhalting, we assume for the purpose of contradiction that $M$ is halting, and show that the starting configuration cannot be a descendant of $H^0$.
-	To do this, we consider every single configuration that halts under the rules of $M$ in the form of a Halting Signature Tree. A Halting Signature Tree is necessary for determining the unreachability of the halt state because it captures every possible way that $M$ can reach its halt state. If we can show that all paths in this tree are unreachable, then we have shown that the starting configuration is not a descendant of $H^0$, and therefore that $M$ is nonhalting. 
+	To do this, we consider every single configuration that halts under the rules of $M$ in the form of a Halting Signature Tree. A Halting Signature Tree is necessary for determining the unreachability of the halt state because it captures every possible way that $M$ can reach its halt state. If we can show that all Halting Signatures in this tree are unreachable, then we have shown that the starting configuration is not a descendant of $H^0$, and therefore that $M$ is nonhalting. It is especially important to use a Halting Signature Tree
 	\begin{definition}{Halting Signature Tree}
 		For some turing machine $M$ with exactly one halt state, let its halting signature tree (HST) $\Tau(M)$ be a directed tree with root $H^0$, and whose nodes are halting signatures $H^n$, and where there exists an edge
 		\begin{align*}
@@ -69,6 +71,7 @@
 		if and only if $H^{n+1}$ is a child of $H^n$
 	\end{definition}
 	\subsection{Reachability of Halting Signature Trees}
+	It is impossible to prove every Halting Signature in a Halting Signature Tree unreachable. However, we can prove the reachability of halting signatures exhaustively by considering the reachability of their children.
 	\begin{lemma} For all halting configurations $H^n$ of some Turing machine $M$, $H^n$ is reachable if and only if at least one child of $H^n$ is also reachable.
 		\begin{proof}
 			Assume that $H^n$ is reachable given $M$ has starting configuration $H_0$. By definition, the starting configuration of $M$ is a descendant of $H^n$. That is, there exists some integer $p$ such that
@@ -78,6 +81,7 @@
 			This means that there exists some halting signature $\mu^{p-1}(H_0) \text{ that contains } H^{n+1}$. Since applying the transition function $\mu$ to $\mu^{p-1}(H_0)$ contains $H^n$, we know that by definition, $H^{n+1}$ is a child of $H^n$. Therefore, if $H^n$ is reachable, at least one of its children $H^{n+1}$ is also reachable.
 		\end{proof}
 	\end{lemma}
+	This means that given any subtree of the Halting Signature Tree rooted at $H^0$, if we can show that all leaves of this subtree are unreachable, then $H^0$ is also unreachable. Therefore, we can prove the unreachability of $H^0$ and by extension, the nonhalting of $M$ by showing that all leaves of a subtree of its Halting Signature Tree are unreachable. This is the fundamental idea behind Backwards Analysis. However, the Halting Signature Tree often splits exponentially, making it computationally impractical to solve using traditional methods. In the next section, we will describe Head-Position Reachability, which will allow us to prove the unreachability of certain halting signatures without having to consider every single child.
 
 	\section{Head-Position Reachability}
 	\subsection{Extremal Halting Signatures}
